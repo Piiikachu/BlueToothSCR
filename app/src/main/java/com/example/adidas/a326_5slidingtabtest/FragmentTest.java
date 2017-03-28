@@ -7,6 +7,7 @@ package com.example.adidas.a326_5slidingtabtest;
         import android.app.Fragment;
         import android.os.Bundle;
         import android.support.annotation.Nullable;
+        import android.support.design.widget.Snackbar;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
@@ -44,7 +45,12 @@ public class FragmentTest extends android.support.v4.app.Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (FragmentSend.MESSAGE_TEMP.length()>0)
                 text.setText(FragmentSend.MESSAGE_TEMP.toString());
+                else{
+                    Snackbar.make(view,"No Message",Snackbar.LENGTH_LONG).setAction("Action",null).show();
+
+                }
             }
         });
 

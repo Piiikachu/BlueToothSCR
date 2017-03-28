@@ -2,6 +2,7 @@ package com.example.adidas.a326_5slidingtabtest;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,9 +42,13 @@ public class FragmentSend extends Fragment {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(editText.length()>0){
                 textGetMassage.setText(editText.getText());
                 Toast.makeText(getActivity(), editText.getText(), Toast.LENGTH_SHORT).show();
-                MESSAGE_TEMP.replace(0,MESSAGE_TEMP.length(),editText.getText().toString());
+                MESSAGE_TEMP.replace(0,MESSAGE_TEMP.length(),editText.getText().toString());}
+                else{
+                    Snackbar.make(view,"No Message",Snackbar.LENGTH_LONG).setAction("Action",null).show();
+                }
             }
         });
         return view;
