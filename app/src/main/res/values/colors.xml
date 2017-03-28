@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorAccent1">#FF4081</color>
+    <color name="red">#bf360c</color>
+    <color name="ripple_red">#ffbf5232</color>
+
+    <color name="material_teal">@color/material_deep_teal_500</color>
+    <color name="ripple_material_teal">#ff149691</color>
+
+    <color name="blue1">#304f9f</color>
+    <color name="grey">@color/material_blue_grey_800</color>
+    <color name="light">@color/primary_material_light</color>
+
+    <color name="colorPrimary">@color/Blue</color>
+    <color name="colorPrimaryDark">@color/darkBlue</color>
+
+
+    <color name="windowBackgroundColor">#333333</color>
+    <color name="black_translucent">#80000000</color>
+
+
+    <color name="mdPurple">#9b59b6</color>
+
+    <color name="darkBlue">#1976D2</color>
+    <color name="Blue">#2196F3</color>
+    <color name="lightBlue">#BBDEFB</color>
+
+    <color name="textWhite">#FFFFFF</color>
+    <color name="dividerGray">#BDBDBD</color>
+    <color name="PrimaryText">#212121</color>
+    <color name="SecondaryText">#757575</color>
+    <color name="colorAccent">#8BC34A</color>
+
+</resources>
