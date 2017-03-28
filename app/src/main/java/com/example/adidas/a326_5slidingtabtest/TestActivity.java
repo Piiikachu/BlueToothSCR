@@ -1,6 +1,9 @@
 package com.example.adidas.a326_5slidingtabtest;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,50 +14,66 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.Set;
+
 public class TestActivity extends Activity {
 
-    //private Toast toast=Toast.makeText(this,"This is a TEST for BUTTON SCAN",Toast.LENGTH_LONG);
+    private BluetoothAdapter mBluetoothAdapter;
+
+    private static int REQUEST_ENABLE_BT=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //region Description
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-
-       // View tittle=this.findViewById(android.R.id.title);
-        //tittle
-
         setContentView(R.layout.activity_test);
-
         setResult(Activity.RESULT_CANCELED);
+        //endregion
+
+        mBluetoothAdapter=BluetoothAdapter.getDefaultAdapter();
+        if (mBluetoothAdapter==null){
+            Toast.makeText(this, "Not supported", Toast.LENGTH_LONG).show();
+        }
+
+        if (!mBluetoothAdapter.isEnabled()){
+            Intent enableBTIntent=new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBTIntent,REQUEST_ENABLE_BT);
+        }
+
+
+
 
         Button btnScan= (Button) findViewById(R.id.test_btn_scan);
         btnScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //// TODO: 2017/3/27 set discover
-                //toast.show();
-                //Snackbar.make(view, "This is a TEST for BUTTON SCAN", Snackbar.LENGTH_LONG)
-                   //     .setAction("Action", null).show();
+
             }
         });
 
         String[] strs=new String[]{"test1","test2"};
 
         ArrayAdapter<String> pairedDevicesArrayAdapter =
-              new ArrayAdapter<>(this,R.layout.activity_test);
-        /*ArrayAdapter<String> pairedDevicesArrayAdapter =
-               new ArrayAdapter<>(this,android.R.layout.simple_list_item_2,
-                       R.id.test_list_pairedDevices,strs);*/
+              new ArrayAdapter<>(this,R.layout.device_name);
         findViewById(R.id.test_list_pairedDevices).setVisibility(View.VISIBLE);
 
-        //pairedDevicesArrayAdapter.add("test1"+"/n11");
-        //pairedDevicesArrayAdapter.add("test2"+"/n11");
+
 
         ArrayAdapter<String> newDevicesArrayAdapter =
-                new ArrayAdapter<>(this,R.layout.activity_test);
+                new ArrayAdapter<String>(this,R.layout.device_name);
         findViewById(R.id.test_list_newDevices).setVisibility(View.VISIBLE);
-        //newDevicesArrayAdapter.add("new1"+"/n11");
-        //newDevicesArrayAdapter.add("new2"+"/n11");
+
+        Set<BluetoothDevice> pairedDevices=mBluetoothAdapter.getBondedDevices();
+
+        if (pairedDevices.size()>0){
+            for (BluetoothDevice device:pairedDevices){
+                pairedDevicesArrayAdapter.add(device.getName()+"\n"+device.getAddress());
+            }
+        }
+
+
 
         //TODO SET onClickListener
         ListView pairedListView= (ListView) findViewById(R.id.test_list_pairedDevices);
