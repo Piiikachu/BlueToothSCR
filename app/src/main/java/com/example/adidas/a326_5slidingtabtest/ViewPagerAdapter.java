@@ -25,7 +25,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return FragmentTest.newInstance(position);
             case 1:
-                return FragmentTest.newInstance(position);
+                return FragmentSend.newInstance(position);
 
 
         }

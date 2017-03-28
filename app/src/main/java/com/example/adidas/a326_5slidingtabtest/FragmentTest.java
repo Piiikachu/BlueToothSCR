@@ -10,6 +10,7 @@ package com.example.adidas.a326_5slidingtabtest;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
+        import android.widget.Button;
         import android.widget.TextView;
 
         import org.w3c.dom.Text;
@@ -22,6 +23,8 @@ package com.example.adidas.a326_5slidingtabtest;
 
 public class FragmentTest extends android.support.v4.app.Fragment {
 
+    private Button button;
+    private TextView text;
     private static final String ARG_POSITION = "position";
     private int position;
     public static FragmentTest newInstance(int position) {
@@ -35,8 +38,16 @@ public class FragmentTest extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.page_content,container,false);
-        TextView text= (TextView) view.findViewById(R.id.text_pgcontent);
-        text.setText("hehehehehe");
+        text= (TextView) view.findViewById(R.id.text_pgcontent);
+        text.setText("By Fire Be Purged");
+        button= (Button) view.findViewById(R.id.btn_get);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                text.setText(FragmentSend.MESSAGE_TEMP.toString());
+            }
+        });
+
         return view;
 
     }

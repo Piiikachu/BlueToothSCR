@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity
 
     private SlidingTabLayout slidingTabLayout;
     private ViewPager vpager;
-    private String[] titles=new String[]{"Tab1","Tab2"};
+    private String[] titles=new String[]{"GET","SEND"};
     private Toolbar toolbar;
     private DrawerLayout drawer;
     private NavigationView navigationView;
@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
+            //getWindow().setTitle(item.getTitle().toString());
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {

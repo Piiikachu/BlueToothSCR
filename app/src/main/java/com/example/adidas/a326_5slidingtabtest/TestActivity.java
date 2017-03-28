@@ -38,10 +38,13 @@ public class TestActivity extends Activity {
             }
         });
 
-        //String[] strs=new String[]{"test1","test2"};
+        String[] strs=new String[]{"test1","test2"};
 
         ArrayAdapter<String> pairedDevicesArrayAdapter =
-                new ArrayAdapter<>(this,R.layout.activity_test);
+              new ArrayAdapter<>(this,R.layout.activity_test);
+        /*ArrayAdapter<String> pairedDevicesArrayAdapter =
+               new ArrayAdapter<>(this,android.R.layout.simple_list_item_2,
+                       R.id.test_list_pairedDevices,strs);*/
         findViewById(R.id.test_list_pairedDevices).setVisibility(View.VISIBLE);
 
         //pairedDevicesArrayAdapter.add("test1"+"/n11");
