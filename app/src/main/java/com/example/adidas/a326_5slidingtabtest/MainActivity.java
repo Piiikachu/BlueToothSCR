@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity
             startActivityForResult(enableBTIntent,REQUEST_ENABLE_BT);
         }
 
-
+        
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
