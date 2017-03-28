@@ -9,13 +9,20 @@ import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class TestActivity extends Activity {
+
+    //private Toast toast=Toast.makeText(this,"This is a TEST for BUTTON SCAN",Toast.LENGTH_LONG);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
+       // View tittle=this.findViewById(android.R.id.title);
+        //tittle
+
         setContentView(R.layout.activity_test);
 
         setResult(Activity.RESULT_CANCELED);
@@ -25,8 +32,9 @@ public class TestActivity extends Activity {
             @Override
             public void onClick(View view) {
                 //// TODO: 2017/3/27 set discover
-                Snackbar.make(view, "This is a TEST for BUTTON SCAN", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //toast.show();
+                //Snackbar.make(view, "This is a TEST for BUTTON SCAN", Snackbar.LENGTH_LONG)
+                   //     .setAction("Action", null).show();
             }
         });
 

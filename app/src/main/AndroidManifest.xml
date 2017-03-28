@@ -24,6 +24,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".TestActivity"
+            android:label="Bluetooth Devices"
             android:theme="@android:style/Theme.Material.Dialog"></activity>
     </application>
 
