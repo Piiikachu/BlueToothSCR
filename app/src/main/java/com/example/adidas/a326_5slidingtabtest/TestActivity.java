@@ -10,6 +10,7 @@ import android.content.IntentFilter;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
@@ -27,7 +28,7 @@ public class TestActivity extends Activity {
 
     private ArrayAdapter<String> newDevicesArrayAdapter;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void  onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //region Description
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
@@ -53,7 +54,8 @@ public class TestActivity extends Activity {
             @Override
             public void onClick(View view) {
                 //// TODO: 2017/3/27 set discover
-
+                doDiscovery();
+                view.setVisibility(View.GONE);
             }
         });
 
@@ -65,8 +67,7 @@ public class TestActivity extends Activity {
 
 
 
-        newDevicesArrayAdapter =
-                new ArrayAdapter<String>(this,R.layout.device_name);
+        newDevicesArrayAdapter =new ArrayAdapter<String>(this,R.layout.device_name);
         findViewById(R.id.test_list_newDevices).setVisibility(View.VISIBLE);
 
         Set<BluetoothDevice> pairedDevices=mBluetoothAdapter.getBondedDevices();
@@ -74,13 +75,18 @@ public class TestActivity extends Activity {
             for (BluetoothDevice device:pairedDevices){
                 pairedDevicesArrayAdapter.add(device.getName()+"\n"+device.getAddress());
             }
+        }else{
+            String noDevice=getResources().getText(R.string.none_paired).toString();
+            pairedDevicesArrayAdapter.add(noDevice);
         }
 
 
 
         IntentFilter filter=new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        registerReceiver(mReceiver,filter);
+        this.registerReceiver(mReceiver,filter);
 
+        filter=new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+        this.registerReceiver(mReceiver,filter);
 
         //TODO SET onClickListener
         ListView pairedListView= (ListView) findViewById(R.id.test_list_pairedDevices);
@@ -96,20 +102,47 @@ public class TestActivity extends Activity {
 
     }
 
+    private void doDiscovery(){
+        setProgressBarIndeterminateVisibility(true);
+        setTitle(R.string.scanning);
+        if (mBluetoothAdapter.isDiscovering()){
+            mBluetoothAdapter.cancelDiscovery();
+        }
+        mBluetoothAdapter.startDiscovery();
+        Log.w("TestACT","StartDiscovery");
+    }
+
     private final BroadcastReceiver mReceiver=new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+
             String action =intent.getAction();
             if (BluetoothDevice.ACTION_FOUND.equals(action)){
-                BluetoothDevice device=intent.getParcelableExtra(BluetoothDevice.EXTRA_NAME);
-                newDevicesArrayAdapter.add(device.getName()+"\n"+device.getAddress());
+                BluetoothDevice device=intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                if (device.getBondState()!=BluetoothDevice.BOND_BONDED){
+                   newDevicesArrayAdapter.add(device.getName()+"\n"+device.getAddress());
+                }
 
+            }else if(BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)){
+                setProgressBarIndeterminateVisibility(false);
+                setTitle(R.string.select_device);
+                if (newDevicesArrayAdapter.getCount()==0) {
+                    String noDevice=getResources().getText(R.string.none_found).toString();
+                    newDevicesArrayAdapter.add(noDevice);
+                }
             }
         }
     };
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
+
+        if (mBluetoothAdapter!=null)
+        {
+            mBluetoothAdapter.cancelDiscovery();
+        }
+
         this.unregisterReceiver(mReceiver);
     }
 }
