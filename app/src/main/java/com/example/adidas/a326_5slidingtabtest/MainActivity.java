@@ -124,6 +124,9 @@ public class MainActivity extends AppCompatActivity
                 Intent intent1=new Intent(this,TestActivity.class);
                 startActivityForResult(intent1,REQUEST_CONNECT_DEVICE_SECURE);
                 return true;
+            case R.id.menu_discoverable:
+                ensureDiscoverable();
+                return true;
         }
         return false;
     }
@@ -153,4 +156,14 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void ensureDiscoverable(){
+        if(mBluetoothAdapter.getScanMode()!=
+                BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE){
+            Intent discoverableIntent=new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+            discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,120);
+            startActivity(discoverableIntent);
+        }
+    }
+
 }

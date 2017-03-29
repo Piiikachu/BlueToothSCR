@@ -59,8 +59,6 @@ public class TestActivity extends Activity {
             }
         });
 
-        String[] strs=new String[]{"test1","test2"};
-
         ArrayAdapter<String> pairedDevicesArrayAdapter =
               new ArrayAdapter<>(this,R.layout.device_name);
         findViewById(R.id.test_list_pairedDevices).setVisibility(View.VISIBLE);
@@ -138,11 +136,9 @@ public class TestActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
 
-        if (mBluetoothAdapter!=null)
-        {
+        if (mBluetoothAdapter!=null) {
             mBluetoothAdapter.cancelDiscovery();
         }
-
         this.unregisterReceiver(mReceiver);
     }
 }
