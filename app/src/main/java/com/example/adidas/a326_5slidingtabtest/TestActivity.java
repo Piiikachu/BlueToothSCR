@@ -13,9 +13,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Set;
@@ -89,12 +91,11 @@ public class TestActivity extends Activity {
         //TODO SET onClickListener
         ListView pairedListView= (ListView) findViewById(R.id.test_list_pairedDevices);
         pairedListView.setAdapter(pairedDevicesArrayAdapter);
-
+        pairedListView.setOnItemClickListener(onItemClickListener);
 
         ListView newDevicesListView= (ListView) findViewById(R.id.test_list_newDevices);
         newDevicesListView.setAdapter(newDevicesArrayAdapter);
-
-
+        newDevicesListView.setOnItemClickListener(onItemClickListener);
 
 
 
@@ -141,4 +142,21 @@ public class TestActivity extends Activity {
         }
         this.unregisterReceiver(mReceiver);
     }
+
+    public static String EXTRA_DEVICE_ADDRESS="device_address";
+    private AdapterView.OnItemClickListener onItemClickListener=new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            mBluetoothAdapter.cancelDiscovery();
+
+            String info=((TextView)view).getText().toString();
+            String address=info.substring(info.length()-17);
+
+            Intent intent =new Intent();
+            intent.putExtra(EXTRA_DEVICE_ADDRESS,address);
+            setResult(Activity.RESULT_OK,intent);
+            finish();
+        }
+    };
+
 }

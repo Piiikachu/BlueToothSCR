@@ -1,5 +1,6 @@
 package com.example.adidas.a326_5slidingtabtest;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
@@ -165,5 +166,25 @@ public class MainActivity extends AppCompatActivity
             startActivity(discoverableIntent);
         }
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        connectDevice();
+        switch (requestCode){
+            case REQUEST_CONNECT_DEVICE_SECURE:
+                if (resultCode== Activity.RESULT_OK){
+                    connectDevice();
+                }
+                break;
+
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void connectDevice(){
+        Toast.makeText(this,"Activity假装connected",Toast.LENGTH_LONG);
+
+    }
+
 
 }

@@ -4,7 +4,9 @@ package com.example.adidas.a326_5slidingtabtest;
  * Created by Adidas on 2017/3/26.
  */
 
+        import android.app.Activity;
         import android.app.Fragment;
+        import android.content.Intent;
         import android.os.Bundle;
         import android.support.annotation.Nullable;
         import android.support.design.widget.Snackbar;
@@ -13,6 +15,7 @@ package com.example.adidas.a326_5slidingtabtest;
         import android.view.ViewGroup;
         import android.widget.Button;
         import android.widget.TextView;
+        import android.widget.Toast;
 
         import org.w3c.dom.Text;
 
@@ -27,7 +30,14 @@ public class FragmentTest extends android.support.v4.app.Fragment {
     private Button button;
     private TextView text;
     private static final String ARG_POSITION = "position";
+    private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
+    private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
+    private static final int REQUEST_ENABLE_BT = 3;
+
+
     private int position;
+
+
     public static FragmentTest newInstance(int position) {
         FragmentTest f = new FragmentTest();
         Bundle b = new Bundle();
@@ -57,5 +67,24 @@ public class FragmentTest extends android.support.v4.app.Fragment {
         return view;
 
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case REQUEST_CONNECT_DEVICE_SECURE:
+                if (resultCode== Activity.RESULT_OK){
+                    connectDevice();
+                }
+                break;
+
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void connectDevice(){
+        Toast.makeText(getActivity(),"假装connected",Toast.LENGTH_LONG);
+
+    }
+
 }
 
