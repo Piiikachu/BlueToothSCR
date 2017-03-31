@@ -68,7 +68,7 @@ public class FragmentTest extends android.support.v4.app.Fragment {
 
     }
 
-    @Override
+ /*   @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode){
             case REQUEST_CONNECT_DEVICE_SECURE:
@@ -79,10 +79,10 @@ public class FragmentTest extends android.support.v4.app.Fragment {
 
         }
         super.onActivityResult(requestCode, resultCode, data);
-    }
+    }*/
 
     private void connectDevice(){
-        Toast.makeText(getActivity(),"假装connected",Toast.LENGTH_LONG);
+        Toast.makeText(getActivity(),"假装connected",Toast.LENGTH_LONG).show();
 
     }
 

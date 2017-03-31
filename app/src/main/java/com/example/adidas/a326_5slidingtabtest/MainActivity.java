@@ -169,12 +169,13 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        connectDevice();
+
         switch (requestCode){
             case REQUEST_CONNECT_DEVICE_SECURE:
                 if (resultCode== Activity.RESULT_OK){
                     connectDevice();
                 }
+
                 break;
 
         }
@@ -182,7 +183,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void connectDevice(){
-        Toast.makeText(this,"Activity假装connected",Toast.LENGTH_LONG);
+        Toast.makeText(this,"假装connected",Toast.LENGTH_LONG).show();
 
     }
 
