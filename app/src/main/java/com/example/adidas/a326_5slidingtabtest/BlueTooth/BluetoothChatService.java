@@ -18,6 +18,8 @@ import java.util.UUID;
 
 public class BluetoothChatService {
 
+
+
     private static final UUID MY_UUID= UUID.fromString("42bc3394-2266-4e03-bbbc-5de7cef1a407");
     private final BluetoothAdapter mBTAdapter;
     private final Handler mHandler;

@@ -6,6 +6,8 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -18,14 +20,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Switch;
 import android.widget.Toast;
 
+import com.example.adidas.a326_5slidingtabtest.BlueTooth.BluetoothTask;
+import  com.example.adidas.a326_5slidingtabtest.BlueTooth.Constants;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static android.app.PendingIntent.getActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private Timer timer;
 
     private SlidingTabLayout slidingTabLayout;
     private ViewPager vpager;
@@ -40,13 +49,17 @@ public class MainActivity extends AppCompatActivity
     private static final int REQUEST_ENABLE_BT = 3;
 
     private BluetoothAdapter mBluetoothAdapter;
-
+    private BluetoothTask mBluetoothTask;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        timer=new Timer();
+        setTimerTask();
+
 
         mBluetoothAdapter=BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter==null){
@@ -182,10 +195,53 @@ public class MainActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        timer.cancel();
+    }
+
     private void connectDevice(){
         Toast.makeText(this,"假装connected",Toast.LENGTH_LONG).show();
 
     }
+
+    private void setTimerTask(){
+        TimerTask taskConnect= new TimerTask(){
+
+            @Override
+            public void run() {
+                Message message=new Message();
+
+            }
+        };
+        timer.schedule(taskConnect,1000,1000);/* 表示1000毫秒之後，每隔1000毫秒執行一次 */
+
+
+    }
+
+    private Handler mhandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            int messageID=msg.what;
+            switch(messageID){
+                case Constants.MESSAGE_DEVICE_NAME:
+                    break;
+                case Constants.MESSAGE_READ:
+                    break;
+                case Constants.MESSAGE_STATE_CHANGE:
+                    break;
+                case Constants.MESSAGE_WRITE:
+                    break;
+                case Constants.MESSAGE_TOAST:
+                    break;
+                default:
+                    break;
+
+            }
+        }
+    };
 
 
 }

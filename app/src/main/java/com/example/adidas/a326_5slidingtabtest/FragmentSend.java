@@ -63,6 +63,8 @@ public class FragmentSend extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int pos=position+1;
                 String name=parent.getItemAtPosition(position).toString();
+                MESSAGE_TEMP.replace(0,MESSAGE_TEMP.length(),name);
+
                 Toast.makeText(getActivity(),"你点击了第" + pos + "项      "+name,Toast.LENGTH_LONG).show();
 
 
