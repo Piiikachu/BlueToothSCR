@@ -11,6 +11,7 @@ import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -20,6 +21,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -34,14 +36,15 @@ import static android.app.PendingIntent.getActivity;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Timer timer;
-
+    private Timer timerMain;
     private SlidingTabLayout slidingTabLayout;
     private ViewPager vpager;
     private String[] titles=new String[]{"GET","SEND"};
     private Toolbar toolbar;
     private DrawerLayout drawer;
     private NavigationView navigationView;
+
+    private StringBuffer mOutStringBuffer;
 
 
     private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
@@ -57,19 +60,11 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        timer=new Timer();
+        timerMain=new Timer();
         setTimerTask();
 
 
-        mBluetoothAdapter=BluetoothAdapter.getDefaultAdapter();
-        if (mBluetoothAdapter==null){
-            Toast.makeText(this, "Not supported", Toast.LENGTH_LONG).show();
-        }
 
-        if (!mBluetoothAdapter.isEnabled()){
-            Intent enableBTIntent=new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBTIntent,REQUEST_ENABLE_BT);
-        }
 
         
 
@@ -106,7 +101,12 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+
+
     }
+
 
     @Override
     public void onBackPressed() {
@@ -198,7 +198,44 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        timer.cancel();
+        if (mBluetoothTask!=null){
+            mBluetoothTask.stop();
+        }
+
+        timerMain.cancel();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mBluetoothAdapter=BluetoothAdapter.getDefaultAdapter();
+        if (mBluetoothAdapter==null){
+            Toast.makeText(this, "Not supported", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (!mBluetoothAdapter.isEnabled()){
+            Intent enableBTIntent=new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBTIntent,REQUEST_ENABLE_BT);
+        }else if (mBluetoothTask==null){
+            setSend();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mBluetoothTask.getState()==BluetoothTask.STATE_NONE){
+            mBluetoothTask.start();
+        }
+    }
+
+    private void setSend() {
+
+        mBluetoothTask=new BluetoothTask(this,mhandler);
+        mOutStringBuffer = new StringBuffer("");
+
+
     }
 
     private void connectDevice(){
@@ -206,16 +243,27 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+
+
+
     private void setTimerTask(){
-        TimerTask taskConnect= new TimerTask(){
+
+
+        TimerTask task= new TimerTask(){
 
             @Override
             public void run() {
                 Message message=new Message();
+  //// TODO: 2017/4/4  set action 
+
+
+
+
 
             }
         };
-        timer.schedule(taskConnect,1000,1000);/* 表示1000毫秒之後，每隔1000毫秒執行一次 */
+        timerMain.schedule(task,1000,1000);/* 表示1000毫秒之後，每隔1000毫秒執行一次 */
+
 
 
     }
