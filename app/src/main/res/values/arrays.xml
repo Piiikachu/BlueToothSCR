@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="send_array">
+        <item>法师</item>
+        <item>牧师</item>
+        <item>战士</item>
+        <item>萨满</item>
+        <item>术士</item>
+    </string-array>
+
+
+</resources>
