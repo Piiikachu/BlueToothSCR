@@ -5,11 +5,12 @@ package com.example.adidas.a326_5slidingtabtest;
  */
 
         import android.app.Activity;
-        import android.app.Fragment;
+
         import android.content.Intent;
         import android.os.Bundle;
         import android.support.annotation.Nullable;
         import android.support.design.widget.Snackbar;
+        import android.support.v4.app.Fragment;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
@@ -25,7 +26,7 @@ package com.example.adidas.a326_5slidingtabtest;
  * Created by Adidas on 2017/3/14.
  */
 
-public class FragmentTest extends android.support.v4.app.Fragment {
+public class FragmentTest extends FragmentBase {
 
     private Button button;
     private TextView text;
@@ -56,7 +57,7 @@ public class FragmentTest extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View view) {
                 if (FragmentSend.MESSAGE_TEMP.length()>0)
-                text.setText(FragmentSend.MESSAGE_TEMP.toString());
+                freshText();
                 else{
                     Snackbar.make(view,"No Message",Snackbar.LENGTH_LONG).setAction("Action",null).show();
 
@@ -83,6 +84,15 @@ public class FragmentTest extends android.support.v4.app.Fragment {
 
     private void connectDevice(){
         Toast.makeText(getActivity(),"假装connected",Toast.LENGTH_LONG).show();
+
+    }
+
+    @Override
+    public void freshText(){
+        String mstring=FragmentSend.MESSAGE_TEMP.toString();
+        if (FragmentSend.MESSAGE_TEMP.length()>0){
+            text.setText(mstring);
+        }
 
     }
 

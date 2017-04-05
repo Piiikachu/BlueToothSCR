@@ -18,7 +18,7 @@ import android.widget.Toast;
  * Created by Adidas on 2017/3/28.
  */
 
-public class FragmentSend extends Fragment {
+public class FragmentSend extends FragmentBase {
     private static final String ARG_POSITION = "position";
     public static StringBuffer MESSAGE_TEMP=new StringBuffer();
     private int position;
@@ -77,6 +77,8 @@ public class FragmentSend extends Fragment {
     }
 
 
+    @Override
+    public void freshText() {
 
-
+    }
 }

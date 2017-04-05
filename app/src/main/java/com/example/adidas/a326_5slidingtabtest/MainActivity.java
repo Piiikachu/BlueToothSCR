@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.adidas.a326_5slidingtabtest.BlueTooth.BluetoothTask;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity
     private Toolbar toolbar;
     private DrawerLayout drawer;
     private NavigationView navigationView;
+    private ViewPagerAdapter vpagerAdater;
 
     private StringBuffer mOutStringBuffer;
 
@@ -74,7 +76,8 @@ public class MainActivity extends AppCompatActivity
         slidingTabLayout= (SlidingTabLayout) findViewById(R.id.sliding_tabs);
         vpager= (ViewPager) findViewById(R.id.viewpager);
 
-        vpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(),titles));
+        vpagerAdater=new ViewPagerAdapter(getSupportFragmentManager(),titles);
+        vpager.setAdapter(vpagerAdater);
         slidingTabLayout.setViewPager(vpager);
         slidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
@@ -248,23 +251,18 @@ public class MainActivity extends AppCompatActivity
 
     private void setTimerTask(){
 
-
         TimerTask task= new TimerTask(){
 
             @Override
             public void run() {
                 Message message=new Message();
-  //// TODO: 2017/4/4  set action 
-
-
-
-
+  //// TODO: 2017/4/4  set action
+                message.what=Constants.MESSAGE_STATE_CHANGE;
+                mhandler.sendMessage(message);
 
             }
         };
         timerMain.schedule(task,1000,1000);/* 表示1000毫秒之後，每隔1000毫秒執行一次 */
-
-
 
     }
 
@@ -273,12 +271,15 @@ public class MainActivity extends AppCompatActivity
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             int messageID=msg.what;
+            TextView textGet= (TextView) findViewById(R.id.text_pgcontent);
             switch(messageID){
                 case Constants.MESSAGE_DEVICE_NAME:
                     break;
                 case Constants.MESSAGE_READ:
                     break;
                 case Constants.MESSAGE_STATE_CHANGE:
+                    if (FragmentSend.MESSAGE_TEMP.length()>0)
+                    textGet.setText(FragmentSend.MESSAGE_TEMP.toString());
                     break;
                 case Constants.MESSAGE_WRITE:
                     break;

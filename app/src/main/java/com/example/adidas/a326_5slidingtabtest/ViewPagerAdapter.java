@@ -19,7 +19,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int position) {
+    public FragmentBase getItem(int position) {
         switch (position) {
             // Open FragmentTab1.java
             case 0:
