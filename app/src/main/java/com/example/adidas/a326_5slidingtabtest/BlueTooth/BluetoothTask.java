@@ -41,8 +41,8 @@ public class BluetoothTask {
     private ConnectTask connectTask;
     private ConnectedTask connectedTask;
 
-    public AcceptTask getAcceptTask(){
-        return acceptTask;
+    public void runAcceptTask(){
+        acceptTask.run();
     }
 
     public ConnectedTask getConnectedTask(){
@@ -102,7 +102,7 @@ public class BluetoothTask {
         updateUITitle();
     }
 
-    public synchronized void connect(BluetoothDevice device, boolean secure) {
+    public synchronized void connect(BluetoothDevice device) {
         Log.d(TAG, "connect to: " + device);
 
         //region Description

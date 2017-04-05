@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity
         switch (requestCode){
             case REQUEST_CONNECT_DEVICE_SECURE:
                 if (resultCode== Activity.RESULT_OK){
-                    connectDevice();
+                    connectDevice(data);
                 }
 
                 break;
@@ -241,8 +241,10 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void connectDevice(){
-        Toast.makeText(this,"假装connected",Toast.LENGTH_LONG).show();
+    private void connectDevice(Intent data){
+        String address=data.getExtras().getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
+        BluetoothDevice device=mBluetoothAdapter.getRemoteDevice(address);
+        mBluetoothTask.connect(device);
 
     }
 
@@ -257,6 +259,7 @@ public class MainActivity extends AppCompatActivity
             public void run() {
                 Message message=new Message();
   //// TODO: 2017/4/4  set action
+
                 message.what=Constants.MESSAGE_STATE_CHANGE;
                 mhandler.sendMessage(message);
 
@@ -284,6 +287,8 @@ public class MainActivity extends AppCompatActivity
                 case Constants.MESSAGE_WRITE:
                     break;
                 case Constants.MESSAGE_TOAST:
+                    break;
+                case Constants.MESSAGE_TASK1:
                     break;
                 default:
                     break;
