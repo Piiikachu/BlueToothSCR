@@ -26,6 +26,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.adidas.a326_5slidingtabtest.BlueTooth.BluetoothChatService;
 import com.example.adidas.a326_5slidingtabtest.BlueTooth.BluetoothTask;
 import  com.example.adidas.a326_5slidingtabtest.BlueTooth.Constants;
 import java.util.Set;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity
     private static final int REQUEST_ENABLE_BT = 3;
 
     private BluetoothAdapter mBluetoothAdapter;
-    private BluetoothTask mBluetoothTask;
+    private BluetoothChatService mBluetoothService;
 
 
     @Override
@@ -201,8 +202,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mBluetoothTask!=null){
-            mBluetoothTask.stop();
+        if (mBluetoothService!=null){
+            mBluetoothService.stop();
         }
 
         timerMain.cancel();
@@ -220,7 +221,7 @@ public class MainActivity extends AppCompatActivity
         if (!mBluetoothAdapter.isEnabled()){
             Intent enableBTIntent=new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBTIntent,REQUEST_ENABLE_BT);
-        }else if (mBluetoothTask==null){
+        }else if (mBluetoothService==null){
             setSend();
         }
     }
@@ -228,14 +229,14 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        if (mBluetoothTask.getState()==BluetoothTask.STATE_NONE){
-            mBluetoothTask.start();
+        if (mBluetoothService.getState()==BluetoothTask.STATE_NONE){
+            mBluetoothService.start();
         }
     }
 
     private void setSend() {
 
-        mBluetoothTask=new BluetoothTask(this,mhandler);
+        mBluetoothService=new BluetoothChatService(this,mhandler);
         mOutStringBuffer = new StringBuffer("");
 
 
@@ -244,7 +245,7 @@ public class MainActivity extends AppCompatActivity
     private void connectDevice(Intent data){
         String address=data.getExtras().getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
         BluetoothDevice device=mBluetoothAdapter.getRemoteDevice(address);
-        mBluetoothTask.connect(device);
+        mBluetoothService.connect(device);
 
     }
 

@@ -45,18 +45,7 @@ public class FragmentSend extends FragmentBase {
         sendListView= (ListView) view.findViewById(R.id.send_listview);
 
 
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(editText.length()>0){
-                textGetMassage.setText(editText.getText());
-                Toast.makeText(getActivity(), editText.getText(), Toast.LENGTH_SHORT).show();
-                MESSAGE_TEMP.replace(0,MESSAGE_TEMP.length(),editText.getText().toString());}
-                else{
-                    Snackbar.make(view,"No Message",Snackbar.LENGTH_LONG).setAction("Action",null).show();
-                }
-            }
-        });
+
 
         sendListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -76,6 +65,34 @@ public class FragmentSend extends FragmentBase {
         return view;
     }
 
+    @Override
+    public void sendMessage(String message) {
+        super.sendMessage(message);
+        // Reset out string buffer to zero and clear the edit text field
+        if (message.length() > 0){
+        mOutStringBuffer.setLength(0);
+        editText.setText(mOutStringBuffer);
+        }
+    }
+
+    @Override
+    protected void setSend() {
+        super.setSend();
+
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(editText.length()>0){
+                    textGetMassage.setText(editText.getText());
+                    MESSAGE_TEMP.replace(0,MESSAGE_TEMP.length(),editText.getText().toString());
+                    sendMessage(MESSAGE_TEMP.toString());
+                }
+                else{
+                    Snackbar.make(view,"No Message",Snackbar.LENGTH_LONG).setAction("Action",null).show();
+                }
+            }
+        });
+    }
 
     @Override
     public void freshText() {
