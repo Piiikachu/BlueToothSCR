@@ -48,15 +48,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mBluetoothAdapter=BluetoothAdapter.getDefaultAdapter();
-        if (mBluetoothAdapter==null){
-            Toast.makeText(this, "Not supported", Toast.LENGTH_LONG).show();
-        }
 
-        if (!mBluetoothAdapter.isEnabled()){
-            Intent enableBTIntent=new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBTIntent,REQUEST_ENABLE_BT);
-        }
 
         
 
@@ -121,12 +113,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         switch (id){
-            case R.id.menu_secure_connect_scan:
-                Intent intent1=new Intent(this,TestActivity.class);
-                startActivityForResult(intent1,REQUEST_CONNECT_DEVICE_SECURE);
-                return true;
-            case R.id.menu_discoverable:
-                ensureDiscoverable();
+            case R.id.menu_settings:
                 return true;
         }
         return false;
@@ -158,34 +145,9 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private void ensureDiscoverable(){
-        if(mBluetoothAdapter.getScanMode()!=
-                BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE){
-            Intent discoverableIntent=new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-            discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION,120);
-            startActivity(discoverableIntent);
-        }
-    }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        switch (requestCode){
-            case REQUEST_CONNECT_DEVICE_SECURE:
-                if (resultCode== Activity.RESULT_OK){
-                    connectDevice();
-                }
 
-                break;
-
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    private void connectDevice(){
-        Toast.makeText(this,"假装connected",Toast.LENGTH_LONG).show();
-
-    }
 
 
 }

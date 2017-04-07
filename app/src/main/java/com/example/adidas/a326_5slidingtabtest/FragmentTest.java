@@ -25,7 +25,7 @@ package com.example.adidas.a326_5slidingtabtest;
  * Created by Adidas on 2017/3/14.
  */
 
-public class FragmentTest extends android.support.v4.app.Fragment {
+public class FragmentTest extends BTFragment {
 
     private Button button;
     private TextView text;
@@ -86,5 +86,9 @@ public class FragmentTest extends android.support.v4.app.Fragment {
 
     }
 
+    @Override
+    protected void setupSend() {
+
+    }
 }
 
