@@ -7,10 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +31,6 @@ public class FragmentSend extends Fragment {
     private Button btnSend;
     private EditText editText;
     private TextView textGetMassage;
-    private ListView sendListView;
 
     @Nullable
     @Override
@@ -42,9 +39,6 @@ public class FragmentSend extends Fragment {
         editText= (EditText) view.findViewById(R.id.send_edit);
         btnSend= (Button) view.findViewById(R.id.btn_sendmessage);
         textGetMassage= (TextView) view.findViewById(R.id.send_textgetmessage);
-        sendListView= (ListView) view.findViewById(R.id.send_listview);
-
-
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,24 +51,6 @@ public class FragmentSend extends Fragment {
                 }
             }
         });
-
-        sendListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int pos=position+1;
-                String name=parent.getItemAtPosition(position).toString();
-                Toast.makeText(getActivity(),"你点击了第" + pos + "项      "+name,Toast.LENGTH_LONG).show();
-
-
-            }
-        });
-
-
-
         return view;
     }
-
-
-
-
 }
