@@ -55,13 +55,17 @@ public class FragmentSend extends BTFragment {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(editText.length()>0){
+/*                if(editText.length()>0){
                 textGetMassage.setText(editText.getText());
                 Toast.makeText(getActivity(), editText.getText(), Toast.LENGTH_SHORT).show();
                 MESSAGE_TEMP.replace(0,MESSAGE_TEMP.length(),editText.getText().toString());}
                 else{
                     Snackbar.make(view,"No Message",Snackbar.LENGTH_LONG).setAction("Action",null).show();
-                }
+                }*/
+
+                int a=mChatService.getState();
+                Toast.makeText(getActivity(), String.valueOf(a), Toast.LENGTH_LONG).show();
+
             }
         });
 
@@ -90,7 +94,7 @@ public class FragmentSend extends BTFragment {
         editText.setOnEditorActionListener(mWriteListener);
 
         // Initialize the send button with a listener that for click events
-        btnSend.setOnClickListener(new View.OnClickListener() {
+/*        btnSend.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Send a message using content of the edit text widget
                 View view = getView();
@@ -99,7 +103,7 @@ public class FragmentSend extends BTFragment {
                     sendMessage(message);
                 }
             }
-        });
+        });*/
 
         // Initialize the BluetoothChatService to perform bluetooth connections
         mChatService = new BluetoothChatService(getActivity(), mHandler);
