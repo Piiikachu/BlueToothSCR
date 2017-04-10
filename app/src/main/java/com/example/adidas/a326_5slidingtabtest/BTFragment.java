@@ -37,13 +37,13 @@ public abstract class  BTFragment extends Fragment {
     protected static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
     protected static final int REQUEST_ENABLE_BT = 3;
 
-    protected BluetoothChatService mChatService;
+    protected static BluetoothChatService mChatService;
 
-    protected String mConnectedDeviceName = null;
+    protected static String mConnectedDeviceName = null;
 
-    protected StringBuffer mOutStringBuffer;
+    protected static StringBuffer mOutStringBuffer;
 
-    private BluetoothAdapter mBluetoothAdapter = null;
+    private static BluetoothAdapter mBluetoothAdapter = null;
 
     protected FragmentActivity activity;
 
